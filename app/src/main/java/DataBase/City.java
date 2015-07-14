@@ -1,13 +1,10 @@
 package DataBase;
 
-/**
- * Created by Singlecloud on 2015/7/13.
- * µÿ –¿‡
- */
+
 public class City {
     private int id;
-    private String cityname;
-    private String citycode;
+    private String cityName;
+    private String cityCode;
     private int provinceId;
 
     public int getId(){
@@ -16,17 +13,17 @@ public class City {
     public void setId(int id){
         this.id = id;
     }
-    public String getCityname(){
-        return cityname;
+    public String getCityName(){
+        return cityName;
     }
-    public void setCityname(String cityname){
-        this.cityname=cityname;
+    public void setCityName(String cityname){
+        this.cityName=cityname;
     }
-    public String getCitycode(){
-        return citycode;
+    public String getCityCode(){
+        return cityCode;
     }
-    public void setCitycode(String citycode){
-        this.citycode=citycode;
+    public void setCityCode(String citycode){
+        this.cityCode=citycode;
     }
     public int getProvinceId(){
         return provinceId;

@@ -30,7 +30,6 @@ public class ChooseAreaActivity extends Activity {
     public static final int LEVEL_PROVINCE = 0;
     public static final int LEVEL_CITY= 1;
     public static final int LEVEL_COUNTY= 2;
-
     private ProgressDialog progressDialog;
     private TextView titleText;
     private ListView listView;
@@ -65,7 +64,7 @@ public class ChooseAreaActivity extends Activity {
         Log.v("debug", "message............x");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?>arg0, View view,int index,long arg3){
+            public void onItemClick(AdapterView<?> arg0, View view,int index,long arg3){
                 Log.v("debug", "message............0");
                 if (currentLevel == LEVEL_PROVINCE){
                     Log.v("debug", "message............1");
@@ -76,7 +75,7 @@ public class ChooseAreaActivity extends Activity {
                     selectedCity = cityList.get(index);
                     queryCounties();
                 }else if (currentLevel == LEVEL_COUNTY) {
-                    String countyCode = countyList.get(index).getCountycode();
+                    String countyCode = countyList.get(index).getCountyCode();
                     Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
                     intent.putExtra("county_code", countyCode);
                     startActivity(intent);
@@ -95,14 +94,14 @@ public class ChooseAreaActivity extends Activity {
         if (provinceList.size()>0){
             dataList.clear();
             for (Province province:provinceList){
-                dataList.add(province.getProvincename());
+                dataList.add(province.getProvinceName());
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
             titleText.setText("ÖÐ¹ú");
             currentLevel = LEVEL_PROVINCE;
         }else {
-            queryFromServer(null, "provinces");
+            queryFromServer(null, "province");
         }
     }
     /**
@@ -114,14 +113,14 @@ public class ChooseAreaActivity extends Activity {
         if (cityList.size()>0){
             dataList.clear();
             for (City city: cityList){
-                dataList.add(city.getCityname());
+                dataList.add(city.getCityName());
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
-            titleText.setText(selectedProvince.getProvincename());
+            titleText.setText(selectedProvince.getProvinceName());
             currentLevel = LEVEL_CITY;
         }else {
-            queryFromServer(selectedProvince.getProvincecode(),"city");
+            queryFromServer(selectedProvince.getProvinceCode(),"city");
         }
     }
     /**
@@ -133,14 +132,14 @@ public class ChooseAreaActivity extends Activity {
         if (countyList.size()>0){
             dataList.clear();
             for (County county:countyList){
-                dataList.add(county.getCountyname());
+                dataList.add(county.getCountyName());
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
-            titleText.setText(selectedCity.getCityname());
+            titleText.setText(selectedCity.getCityName());
             currentLevel = LEVEL_COUNTY;
         }else {
-            queryFromServer(selectedCity.getCitycode(), "county");
+            queryFromServer(selectedCity.getCityCode(), "county");
         }
     }
     /**
@@ -157,16 +156,16 @@ public class ChooseAreaActivity extends Activity {
         showProgressDialog();
         HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
             @Override
-            public void onFinsh(String response) {
+            public void onFinish(String response) {
                 boolean result = false;
                 Log.v("debug", "message............7");
-                if ("Province".equals(type)){
+                if ("province".equals(type)){
                     result = Utility.handleProvincesResponse(
                             dataBasesimpleweather,response);
-                }else if("City".equals(type)){
+                }else if("city".equals(type)){
                     result = Utility.handleCitiesResponse(
                             dataBasesimpleweather,response,selectedProvince.getId());
-                }else if("County".equals(type)){
+                }else if("county".equals(type)){
                     result = Utility.handleCountiesResponse(
                             dataBasesimpleweather,response,selectedCity.getId());
                 }

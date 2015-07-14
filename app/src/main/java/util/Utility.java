@@ -5,14 +5,13 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
 import DataBase.City;
 import DataBase.County;
 import DataBase.DataBasesimpleweather;
@@ -27,12 +26,13 @@ public class Utility {
             DataBasesimpleweather dataBasesimpleweather,String response){
         if (!TextUtils.isEmpty(response)){
             String[] allProvinces = response.split(",");
+            Log.v("debug", "message............u1");
             if (allProvinces != null && allProvinces.length >0){
                 for(String p:allProvinces){
                     String[] array = p.split("\\|");
                     Province province =new Province();
-                    province.setProvincecode(array[0]);
-                    province.setProvincename(array[1]);
+                    province.setProvinceCode(array[0]);
+                    province.setProvinceName(array[1]);
                     dataBasesimpleweather.saveProvince(province);
                 }
                 return true;
@@ -43,13 +43,14 @@ public class Utility {
     public static boolean handleCitiesResponse(                                     //解析城市
             DataBasesimpleweather dataBasesimpleweather,String response,int provinceid){
         if (!TextUtils.isEmpty(response)){
+            Log.v("debug", "message............u2");
             String[] allcities =response.split(",");
             if (allcities != null && allcities.length>0){
                 for (String c: allcities){
                     String[] array=c.split("\\|");
                     City city = new City();
-                    city.setCitycode(array[0]);
-                    city.setCityname(array[1]);
+                    city.setCityCode(array[0]);
+                    city.setCityName(array[1]);
                     city.setProvinceId(provinceid);
                     dataBasesimpleweather.saveCity(city);
                 }
@@ -62,13 +63,14 @@ public class Utility {
             DataBasesimpleweather dataBasesimpleweather,String response,int cityId){
         if (!TextUtils.isEmpty(response)){
             String[] allCounties = response.split(",");
+            Log.v("debug", "message............u3");
             if (allCounties != null && allCounties.length>0){
                 for (String c : allCounties){
                     String[] array = c.split("\\|");
                     County county =new County();
-                    county.setCountycode(array[0]);
-                    county.setCountyname(array[1]);
-                    county.setCityid(cityId);
+                    county.setCountyCode(array[0]);
+                    county.setCountyName(array[1]);
+                    county.setCityId(cityId);
                     dataBasesimpleweather.saveCounty(county);
                 }
                 return true;
@@ -77,7 +79,7 @@ public class Utility {
         return false;
     }
     public static void handleWeatherResponse(Context context,String response){
-        try {
+        try {Log.v("debug", "message............u4");
             JSONObject jsonObject = new JSONObject(response);
             JSONObject weatherInfo = jsonObject.getJSONObject("weatherInfo");
             String cityName = weatherInfo.getString("city");
@@ -93,7 +95,7 @@ public class Utility {
     }
     public static void saveWeatherInfo(
             Context context,String cityName,String weather,String temp1,String temp2,
-            String weatherDesp,String publishTime){
+            String weatherDesp,String publishTime){Log.v("debug", "message............u5");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("city_selected", true);

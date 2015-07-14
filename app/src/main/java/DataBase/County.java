@@ -1,34 +1,31 @@
 package DataBase;
 
-/**
- * Created by Singlecloud on 2015/7/13.
- * œÿ –¿‡
- */
+
 public class County {
     private int id;
-    private String countyname;
-    private String countycode;
-    private int cityid;
+    private String countyName;
+    private String countyCode;
+    private int cityId;
     public int getId(){
         return id;
     }
     public void setId(int id){this.id=id;}
-    public String getCountyname(){
-        return countyname;
+    public String getCountyName(){
+        return countyName;
     }
-    public void setCountyname(String countyname){
-        this.countyname=countyname;
+    public void setCountyName(String countyname){
+        this.countyName=countyname;
     }
-    public String getCountycode(){
-        return countycode;
+    public String getCountyCode(){
+        return countyCode;
     }
-    public void setCountycode(String countycode){
-        this.countycode=countycode;
+    public void setCountyCode(String countycode){
+        this.countyCode=countycode;
     }
-    public int getCityid(){
-        return cityid;
+    public int getCityId(){
+        return cityId;
     }
-    public void setCityid(int cityid){
-        this.cityid=cityid;
+    public void setCityId(int cityid){
+        this.cityId=cityid;
     }
 }

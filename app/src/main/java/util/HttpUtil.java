@@ -1,5 +1,7 @@
 package util;
 
+
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,7 +17,7 @@ public class HttpUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpURLConnection connection =null;
+                HttpURLConnection connection = null;
             try{
                 URL url =new URL(address);
                 connection = (HttpURLConnection) url.openConnection();
@@ -30,7 +32,7 @@ public class HttpUtil {
                     response.append(line);
                 }
                 if (listener != null){
-                    listener.onFinsh(response.toString());
+                    listener.onFinish(response.toString());
                 }
 
             } catch (Exception e){

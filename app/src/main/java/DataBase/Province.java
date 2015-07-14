@@ -6,24 +6,24 @@ package DataBase;
  */
 public class Province {
     private int id;
-    private String provincename;
-    private String provincecode;
+    private String provinceName;
+    private String provinceCode;
     public int getId(){
         return id;
     }
     public void setId(int id){
         this.id =id;
     }
-    public String getProvincename(){
-        return provincename;
+    public String getProvinceName(){
+        return provinceName;
     }
-    public void setProvincename(String provincename){
-        this.provincename=provincename;
+    public void setProvinceName(String provincename){
+        this.provinceName=provincename;
     }
-    public String getProvincecode(){
-        return provincecode;
+    public String getProvinceCode(){
+        return provinceCode;
     }
-    public void setProvincecode(String provincecode){
-        this.provincecode=provincecode;
+    public void setProvinceCode(String provincecode){
+        this.provinceCode=provincecode;
     }
 }

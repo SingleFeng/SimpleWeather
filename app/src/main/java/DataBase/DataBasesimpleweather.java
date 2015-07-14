@@ -10,16 +10,16 @@ import java.util.List;
 
 /**
  * Created by Singlecloud on 2015/7/13.
- * ·â×°³£ÓÃÊı¾İ¿â²Ù×÷
+ * åˆ›å»ºæ•°æ®åº“
  */
 public class DataBasesimpleweather {
-    public static final String DB_NAME = "Simple_weather";  //Êı¾İ¿âÃû
-    public static final int VERSION = 1;                    //Êı¾İ¿â°æ±¾
+    public static final String DB_NAME = "simple_weather";  //æ•°æ®åº“å
+    public static final int VERSION = 1;                    //æ•°æ®åº“ç‰ˆæœ¬å·
     private static DataBasesimpleweather dataBasesimpleweather;
     private SQLiteDatabase db;
 
 /**
- *½«¹¹Ôì·½·¨Ë½ÓĞ»¯
+ *æ„é€ æ–¹æ³•ç§æœ‰åŒ–
  */
     private DataBasesimpleweather(Context context){
         DataBasesimpleweatherHelper dbHelper = new DataBasesimpleweatherHelper(
@@ -27,7 +27,7 @@ public class DataBasesimpleweather {
         db= dbHelper.getWritableDatabase();
     }
 /**
- *»ñÈ¡ÊµÀı
+ *è·å–å®ä¾‹
  */
     public synchronized static DataBasesimpleweather getInstance(Context context){
         if (dataBasesimpleweather == null){
@@ -36,7 +36,7 @@ public class DataBasesimpleweather {
         return dataBasesimpleweather;
     }
 /**
- * ´æ´¢ProvinceÊµÀıµ½Êı¾İ¿â
+ * å­˜å‚¨çœä»½å®ä¾‹åˆ°æ•°æ®åº“
  */
     public void saveProvince(Province province){
         if(province != null){
@@ -47,7 +47,7 @@ public class DataBasesimpleweather {
         }
     }
 /**
- *´ÓÊı¾İ¿â¶ÁÈ¡È«¹úËùÓĞÊ¡·İµÄĞÅÏ¢
+ *ä»æ•°æ®åº“è¯»å–å…¨å›½çœä»½ä¿¡æ¯
  */
     public List<Province> loadProvinces(){
         List<Province> list = new ArrayList<Province>();
@@ -73,17 +73,17 @@ public class DataBasesimpleweather {
         }
     }
 
-    public List<City> loadCities(int provinceid){
+    public List<City> loadCities(int provinceId){
         List<City> list = new ArrayList<City>();
         Cursor cursor = db.query("City",null,"province_id=?",
-                new String[] {String.valueOf(provinceid)},null,null,null);
+                new String[] {String.valueOf(provinceId)},null,null,null);
         if(cursor.moveToFirst()){
             do{
                 City city= new City();
                 city.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
                 city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
-                city.setProvinceId(provinceid);
+                city.setProvinceId(provinceId);
                 list.add(city);
             }while (cursor.moveToNext());
         }

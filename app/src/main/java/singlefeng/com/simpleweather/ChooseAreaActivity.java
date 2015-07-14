@@ -25,6 +25,9 @@ import util.HttpCallbackListener;
 import util.HttpUtil;
 import util.Utility;
 
+/**
+ * éå†å…¨å›½æ‰€æœ‰çœå¸‚å¿åŠŸèƒ½
+ */
 
 public class ChooseAreaActivity extends Activity {
     public static final int LEVEL_PROVINCE = 0;
@@ -61,17 +64,13 @@ public class ChooseAreaActivity extends Activity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
         dataBasesimpleweather = DataBasesimpleweather.getInstance(this);
-        Log.v("debug", "message............x");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view,int index,long arg3){
-                Log.v("debug", "message............0");
                 if (currentLevel == LEVEL_PROVINCE){
-                    Log.v("debug", "message............1");
                     selectedProvince = provinceList.get(index);
                     queryCities();
                 }else if (currentLevel == LEVEL_CITY){
-                    Log.v("debug", "message............2");
                     selectedCity = cityList.get(index);
                     queryCounties();
                 }else if (currentLevel == LEVEL_COUNTY) {
@@ -86,11 +85,10 @@ public class ChooseAreaActivity extends Activity {
         queryProvinces();
     }
     /**
-     * ²éÑ¯È«¹úËùÓĞµÄÊ¡£¬ÓÅÏÈ¼¶ Êı¾İ¿â>·şÎñÆ÷
+     * æŸ¥è¯¢å…¨å›½æ‰€æœ‰çš„çœä»½
      */
     private void queryProvinces(){
         provinceList = dataBasesimpleweather.loadProvinces();
-        Log.v("debug", "message............3");
         if (provinceList.size()>0){
             dataList.clear();
             for (Province province:provinceList){
@@ -98,18 +96,17 @@ public class ChooseAreaActivity extends Activity {
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
-            titleText.setText("ÖĞ¹ú");
+            titleText.setText("ä¸­å›½");   // !!!!!!!!!!!!!!! china
             currentLevel = LEVEL_PROVINCE;
         }else {
             queryFromServer(null, "province");
         }
     }
     /**
-     * ²éÑ¯ÒÑÑ¡ÖĞÊ¡µÄËùÓĞµØÊĞ  ÓÅÏÈ¼¶ Êı¾İ¿â>·şÎñÆ÷
+     * æŸ¥è¯¢é€‰ä¸­çœä»½ä¸‹æ‰€æœ‰åœ°å¸‚
      */
     private void queryCities(){
         cityList = dataBasesimpleweather.loadCities(selectedProvince.getId());
-        Log.v("debug", "message............4");
         if (cityList.size()>0){
             dataList.clear();
             for (City city: cityList){
@@ -124,11 +121,10 @@ public class ChooseAreaActivity extends Activity {
         }
     }
     /**
-     * ²éÑ¯ÒÑÑ¡ÖĞµØÊĞµÄËùÓĞÏØÊĞ ÓÅÏÈ¼¶ Êı¾İ¿â>·şÎñÆ÷
+     * æŸ¥è¯¢æ‰€é€‰åœ°å¸‚ä¸‹æ‰€æœ‰å¿å¸‚
      */
     private void queryCounties(){
         countyList= dataBasesimpleweather.loadCounties(selectedCity.getId());
-        Log.v("debug", "message............5");
         if (countyList.size()>0){
             dataList.clear();
             for (County county:countyList){
@@ -143,10 +139,9 @@ public class ChooseAreaActivity extends Activity {
         }
     }
     /**
-     * ¸ù¾İ´«ÈëµÄ´úºÅºÍÀàĞÍ´Ó·şÎñÆ÷ÉÏ²éÑ¯ÊĞÏØÊı¾İ
+     * æ ¹æ®ä»£å·æŸ¥è¯¢å¿å¸‚æ•°æ®
      */
     private void queryFromServer(final String code,final String type){
-        Log.v("debug", "message............6");
         String address;
         if (!TextUtils.isEmpty(code)){
             address="http://www.weather.com.cn/data/list3/city"+code+".xml";
@@ -158,7 +153,6 @@ public class ChooseAreaActivity extends Activity {
             @Override
             public void onFinish(String response) {
                 boolean result = false;
-                Log.v("debug", "message............7");
                 if ("province".equals(type)){
                     result = Utility.handleProvincesResponse(
                             dataBasesimpleweather,response);
@@ -188,30 +182,29 @@ public class ChooseAreaActivity extends Activity {
 
             @Override
             public void onError(Exception e) {
-                Log.v("debug", "message............8");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         closeProgressDialog();
-                        Toast.makeText(ChooseAreaActivity.this,"¼ÓÔØÊ§°Ü",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChooseAreaActivity.this,"åŠ è½½å¤±è´¥",Toast.LENGTH_SHORT).show(); //!!!!!!!!!!!!! load default
                     }
                 });
             }
         });
     }
     /**
-     * ½ø¶È¶Ô»°¿ò
+     * æ˜¾ç¤ºè¿›åº¦å¯¹è¯æ¡†
      */
     private void showProgressDialog(){
         if (progressDialog == null){
             progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("ÕıÔÚ¼ÓÔØ...");
+            progressDialog.setMessage("æ­£åœ¨åŠ è½½...");           //!!!!!!!!!!!!!!!!loading
             progressDialog.setCanceledOnTouchOutside(false);
         }
         progressDialog.show();
     }
     /**
-     * ¹Ø±Õ¶Ô»°¿ò
+     * å…³é—­è¿›åº¦å¯¹è¯æ¡†
      */
     private void closeProgressDialog(){
         if(progressDialog !=null){
@@ -219,7 +212,7 @@ public class ChooseAreaActivity extends Activity {
         }
     }
     /**
-     * ²¶»ñBACK£¬ÅĞ¶ÏÓ¦¸Ã·µ»Øµ½ÄÄ¸ö¼¶±ğ
+     * æ•è·è¿”å›é”®ï¼Œæ›´æ”¹åŠŸèƒ½
      */
     @Override
     public void onBackPressed(){

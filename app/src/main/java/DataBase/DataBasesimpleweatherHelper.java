@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by Singlecloud on 2015/7/13.
- * ÕâÀïÊÇ¼òµ¥ÌìÆøµÄÊı¾İ¿â½¨±í
+ * è¿™é‡Œæ˜¯ç®€å•å¤©æ°”çš„æ•°æ®åº“å»ºè¡¨
  */
 public class DataBasesimpleweatherHelper extends SQLiteOpenHelper{
     public static final String CREATE_PROVINCE = "create table Province ("

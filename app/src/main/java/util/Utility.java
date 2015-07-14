@@ -19,14 +19,13 @@ import DataBase.Province;
 
 /**
  * Created by Singlecloud on 2015/7/13.
- * ½âÎöºÍ´¦Àí·þÎñÆ÷·µ»ØµÄÊý¾Ý
+ * è§£æžå’Œå¤„ç†æœåŠ¡å™¨è¿”å›žçš„æ•°æ®
  */
 public class Utility {
-    public synchronized static boolean handleProvincesResponse(                     //½âÎöÊ¡·Ý
+    public synchronized static boolean handleProvincesResponse(                     //è§£æžçœä»½
             DataBasesimpleweather dataBasesimpleweather,String response){
         if (!TextUtils.isEmpty(response)){
             String[] allProvinces = response.split(",");
-            Log.v("debug", "message............u1");
             if (allProvinces != null && allProvinces.length >0){
                 for(String p:allProvinces){
                     String[] array = p.split("\\|");
@@ -40,10 +39,9 @@ public class Utility {
         }
         return false;
     }
-    public static boolean handleCitiesResponse(                                     //½âÎö³ÇÊÐ
+    public static boolean handleCitiesResponse(                                     //è§£æžåŸŽå¸‚
             DataBasesimpleweather dataBasesimpleweather,String response,int provinceid){
         if (!TextUtils.isEmpty(response)){
-            Log.v("debug", "message............u2");
             String[] allcities =response.split(",");
             if (allcities != null && allcities.length>0){
                 for (String c: allcities){
@@ -63,7 +61,6 @@ public class Utility {
             DataBasesimpleweather dataBasesimpleweather,String response,int cityId){
         if (!TextUtils.isEmpty(response)){
             String[] allCounties = response.split(",");
-            Log.v("debug", "message............u3");
             if (allCounties != null && allCounties.length>0){
                 for (String c : allCounties){
                     String[] array = c.split("\\|");
@@ -79,7 +76,7 @@ public class Utility {
         return false;
     }
     public static void handleWeatherResponse(Context context,String response){
-        try {Log.v("debug", "message............u4");
+        try {
             JSONObject jsonObject = new JSONObject(response);
             JSONObject weatherInfo = jsonObject.getJSONObject("weatherInfo");
             String cityName = weatherInfo.getString("city");
@@ -95,8 +92,8 @@ public class Utility {
     }
     public static void saveWeatherInfo(
             Context context,String cityName,String weather,String temp1,String temp2,
-            String weatherDesp,String publishTime){Log.v("debug", "message............u5");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyÄêMÔÂdÈÕ", Locale.CHINA);
+            String weatherDesp,String publishTime){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyå¹´Mæœˆdæ—¥", Locale.CHINA);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("city_selected", true);
         editor.putString("city_name", cityName);

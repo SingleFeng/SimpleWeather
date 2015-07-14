@@ -2,7 +2,7 @@ package DataBase;
 
 /**
  * Created by Singlecloud on 2015/7/13.
- * Ê¡·İÀà
+ * çœä»½ç±»
  */
 public class Province {
     private int id;

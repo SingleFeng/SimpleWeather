@@ -28,13 +28,11 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
     private TextView currentDateText;
     private Button switchCity;
     private Button refreshWeather;
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.weather_layout);
-        //³õÊ¼»¯¿Ø¼şÊµÀı
         weatherInfoLayout = (LinearLayout) findViewById(R.id.weather_info_layout);
         cityNameText = (TextView) findViewById(R.id.city_name);
         pubishText = (TextView) findViewById(R.id.pubish_text);
@@ -48,12 +46,11 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         refreshWeather.setOnClickListener(this);
         String countyCode = getIntent().getStringExtra("county_code");
         if (!TextUtils.isEmpty(countyCode)){
-            //ÓĞÏØ¼¶ÊĞ´úºÅ¾ÍÈ¥²éÑ¯ÌìÆø
-            pubishText.setText("Í¬²½ÖĞ...");
+            pubishText.setText("åŒæ­¥ä¸­...");
             weatherInfoLayout.setVisibility(View.INVISIBLE);
+            cityNameText.setVisibility(View.INVISIBLE);
             queryWeatherCode(countyCode);
         }else {
-            //·ñÔòÏÔÊ¾±¾µØÌìÆø
             showWeather();
         }
         switchCity.setOnClickListener(this);
@@ -69,7 +66,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.refresh_weather:
-                pubishText.setText("Í¬²½ÖĞ...");
+                pubishText.setText("åŒæ­¥ä¸­...");
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                 String weatherCode = prefs.getString("weather_code","");
                 if (!TextUtils.isEmpty(weatherCode)){
@@ -81,25 +78,25 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         }
     }
     /**
-     * ²éÑ¯ÏØ¼¶ÊĞ´úºÅËù¶ÔÓ¦µÄÌìÆø´úºÅ
+     * æ ¹æ®ä¼ å…¥ä»£å·æŸ¥è¯¢å¤©æ°”ä»£å·
      */
 
     private void queryWeatherCode(String countyCode){
-        String address = "http://www.weather.com.cn/data/list3/city"+countyCode+".xml";
+        String address = "http://www.weather.com.cn/data/list3/city" + countyCode + ".xml";
         queryFromServer(address,"countyCode");
     }
     /**
-     * ²éÑ¯ÌìÆø´úºÅËù¶ÔÓ¦µÄÌìÆø
+     * æ ¹æ®å¤©æ°”ä»£å·æŸ¥è¯¢å¤©æ°”
      */
 
     private void queryWeatherInfo(String weatherCode){
-        String address = "http://www.weather.com.cn/data/cityinfo/"+weatherCode+".html";
+        String address = "http://www.weather.com.cn/data/cityinfo/" + weatherCode + ".html";
         queryFromServer(address, "weatherCode");
     }
     private void queryFromServer(final String address,final String type){
         HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
             @Override
-            public void onFinish(String response) {
+            public void onFinish(final String response) {
                 if ("countyCode".equals(type)){
                     if (!TextUtils.isEmpty(response)){
                         String[] array=response.split("\\|");
@@ -118,13 +115,12 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
                     });
                 }
             }
-
             @Override
             public void onError(Exception e) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        pubishText.setText("Í¬²½Ê§°Ü");
+                        pubishText.setText("åŒæ­¥å¤±è´¥");
                     }
                 });
             }
@@ -136,11 +132,11 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         temp1Text.setText(prefs.getString("temp1",""));
         temp2Text.setText(prefs.getString("temp2",""));
         weatherDespText.setText(prefs.getString("weather_desp",""));
-        pubishText.setText("½ñÌì"+prefs.getString("publish_time","")+"·¢²¼");
+        pubishText.setText("ä»Šå¤©" + prefs.getString("publish_time","") + "å‘å¸ƒ");
         currentDateText.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, AutoUpdateService.class);
-        startActivity(intent);
+        startService(intent);
     }
 }

@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
+import receiver.AutoUpdateReceiver;
 import util.HttpCallbackListener;
 import util.HttpUtil;
 import util.Utility;
@@ -28,9 +29,9 @@ public class AutoUpdateService extends Service {
             }
         }).start();
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int anHour = 8 * 60 *60 *1000;
+        int anHour =8 * 60 * 60 *1000;
         long triggerAtTime = SystemClock.elapsedRealtime()+anHour;
-        Intent i = new Intent(this,AutoUpdateService.class);
+        Intent i = new Intent(this, AutoUpdateReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(this,0,i,0);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,triggerAtTime,pi);
         return super.onStartCommand(intent,flags,startId);

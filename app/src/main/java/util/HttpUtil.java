@@ -10,7 +10,7 @@ import java.net.URL;
 
 /**
  * Created by Singlecloud on 2015/7/13.
- * 从互联网获取数据
+ * 浠庝簰鑱旂綉鑾峰彇鏁版嵁
  */
 public class HttpUtil {
     public static void sendHttpRequest(final String address,final HttpCallbackListener listener){

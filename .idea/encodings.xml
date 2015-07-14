@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/DataBase/DataBasesimpleweather.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/DataBase/DataBasesimpleweatherHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/receiver/AutoUpdateReceiver.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/service/AutoUpdateService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/singlefeng/com/simpleweather/ChooseAreaActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/singlefeng/com/simpleweather/WeatherActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/util/HttpUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/util/Utility.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

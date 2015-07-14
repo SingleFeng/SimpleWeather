@@ -7,8 +7,10 @@
         android:layout_height="50dp"
         android:background="#484E61">
         <Button
+            android:text="重选城市"
+            android:textColor="#000"
             android:id="@+id/switch_city"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
@@ -22,8 +24,10 @@
             android:textSize="24sp"
             />
         <Button
+            android:text="同步天气"
+            android:textColor="#000"
             android:id="@+id/refresh_weather"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

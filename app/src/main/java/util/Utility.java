@@ -1,6 +1,17 @@
 package util;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import DataBase.City;
 import DataBase.County;
@@ -64,5 +75,35 @@ public class Utility {
             }
         }
         return false;
+    }
+    public static void handleWeatherResponse(Context context,String response){
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONObject weatherInfo = jsonObject.getJSONObject("weatherInfo");
+            String cityName = weatherInfo.getString("city");
+            String weatherCode = weatherInfo.getString("cityid");
+            String temp1 = weatherInfo.getString("temp1");
+            String temp2 = weatherInfo.getString("temp2");
+            String weatherDesp = weatherInfo.getString("weather");
+            String pubishTime = weatherInfo.getString("ptime");
+            saveWeatherInfo(context,cityName,weatherCode,temp1,temp2,weatherDesp,pubishTime);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+    public static void saveWeatherInfo(
+            Context context,String cityName,String weather,String temp1,String temp2,
+            String weatherDesp,String publishTime){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyƒÍM‘¬d»’", Locale.CHINA);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("city_selected", true);
+        editor.putString("city_name", cityName);
+        editor.putString("weather_code", weather);
+        editor.putString("temp1", temp1);
+        editor.putString("temp2", temp2);
+        editor.putString("weatherDesp", weatherDesp);
+        editor.putString("publishTime", publishTime);
+        editor.putString("current_date",sdf.format(new Date()));
+        editor.commit();
     }
 }

@@ -11,7 +11,7 @@ import java.net.URL;
  * 从互联网获取数据
  */
 public class HttpUtil {
-    public static void sendHttpReauest(final String address,final HttpCallbackListener listener){
+    public static void sendHttpRequest(final String address,final HttpCallbackListener listener){
         new Thread(new Runnable() {
             @Override
             public void run() {

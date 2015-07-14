@@ -2,7 +2,10 @@ package singlefeng.com.simpleweather;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -12,10 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import DataBase.City;
 import DataBase.County;
 import DataBase.DataBasesimpleweather;
@@ -36,7 +37,7 @@ public class ChooseAreaActivity extends Activity {
     private ArrayAdapter<String> adapter;
     private DataBasesimpleweather dataBasesimpleweather;
     private List<String> dataList = new ArrayList<String>();
-
+    private boolean isFromWeatherActivity;
     private List<Province> provinceList;
     private List<City> cityList;
     private List<County> countyList;
@@ -44,16 +45,24 @@ public class ChooseAreaActivity extends Activity {
     private City selectedCity;
     private int currentLevel;
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity",false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("city_selected", false)) {
+            Intent intent = new Intent(this, WeatherActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
         listView = (ListView) findViewById(R.id.list_view);
         titleText = (TextView) findViewById(R.id.title_text);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,dataList);
-        Log.v("debug", "message............x");
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
         dataBasesimpleweather = DataBasesimpleweather.getInstance(this);
+        Log.v("debug", "message............x");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?>arg0, View view,int index,long arg3){
@@ -66,6 +75,12 @@ public class ChooseAreaActivity extends Activity {
                     Log.v("debug", "message............2");
                     selectedCity = cityList.get(index);
                     queryCounties();
+                }else if (currentLevel == LEVEL_COUNTY) {
+                    String countyCode = countyList.get(index).getCountycode();
+                    Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
+                    intent.putExtra("county_code", countyCode);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -140,10 +155,11 @@ public class ChooseAreaActivity extends Activity {
             address="http://www.weather.com.cn/data/list3/city.xml";
         }
         showProgressDialog();
-        HttpUtil.sendHttpReauest(address, new HttpCallbackListener() {
+        HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
             @Override
             public void onFinsh(String response) {
                 boolean result = false;
+                Log.v("debug", "message............7");
                 if ("Province".equals(type)){
                     result = Utility.handleProvincesResponse(
                             dataBasesimpleweather,response);
@@ -173,6 +189,7 @@ public class ChooseAreaActivity extends Activity {
 
             @Override
             public void onError(Exception e) {
+                Log.v("debug", "message............8");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -211,7 +228,12 @@ public class ChooseAreaActivity extends Activity {
             queryCities();
         }else if (currentLevel == LEVEL_CITY){
             queryProvinces();
-        }else
+        }else{
+            if (isFromWeatherActivity){
+                Intent intent = new Intent(this,WeatherActivity.class);
+                startActivity(intent);
+            }
             finish();
+        }
     }
 }

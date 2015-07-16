@@ -78,7 +78,7 @@ public class Utility {
     public static void handleWeatherResponse(Context context,String response){
         try {
             JSONObject jsonObject = new JSONObject(response);
-            JSONObject weatherInfo = jsonObject.getJSONObject("weatherInfo");
+            JSONObject weatherInfo = jsonObject.getJSONObject("weatherinfo");
             String cityName = weatherInfo.getString("city");
             String weatherCode = weatherInfo.getString("cityid");
             String temp1 = weatherInfo.getString("temp1");
@@ -100,7 +100,7 @@ public class Utility {
         editor.putString("weather_code", weather);
         editor.putString("temp1", temp1);
         editor.putString("temp2", temp2);
-        editor.putString("weatherDesp", weatherDesp);
+        editor.putString("weather_desp", weatherDesp);
         editor.putString("publishTime", publishTime);
         editor.putString("current_date",sdf.format(new Date()));
         editor.commit();
